@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniSocial</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        ❤️ MiniSocial
+    </div>
+
+    <ul>
+
+        <li>
+            <a href="{% url 'home' %}">
+                <i class="fa-solid fa-house"></i> Home
+            </a>
+        </li>
+
+        {% if user.is_authenticated %}
+
+        <li>
+            <a href="{% url 'profile' %}">
+                <i class="fa-solid fa-user"></i> Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-compass"></i> Explore
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-bell"></i> Notifications
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'logout' %}">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </a>
+        </li>
+
+        {% else %}
+
+        <li>
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'register' %}">
+                Register
+            </a>
+        </li>
+
+        {% endif %}
+
+    </ul>
+
+</nav>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <div style="text-align:center;">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                 width="100"
+                 style="border-radius:50%; margin-bottom:15px;">
+
+            <h2>Welcome 👋</h2>
+
+            <h3>{{ request.user.username }}</h3>
+
+            <p style="color:gray;margin:15px 0;">
+                Welcome to MiniSocial ❤️
+            </p>
+
+            <a href="{% url 'profile' %}">
+                <button>My Profile</button>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Main Content -->
+    <div>
+
+        <!-- Create Post -->
+        <div class="create-post">
+
+            <h2>Create New Post</h2>
+
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <textarea
+                    name="caption"
+                    rows="5"
+                    placeholder="What's on your mind today?"></textarea>
+
+                <br><br>
+
+                <input type="file" name="image">
+
+                <br><br>
+
+                <button type="submit">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Share Post
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- Posts -->
+        {% for post in posts %}
+
+        <div class="post-card">
+
+            <!-- User Info -->
+            <div style="display:flex;align-items:center;gap:15px;">
+
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                     width="60"
+                     height="60"
+                     style="border-radius:50%;">
+
+                <div>
+
+                    <h3>{{ post.user.username }}</h3>
+
+                    <small>{{ post.created_at }}</small>
+
+                </div>
+
+            </div>
+
+            <!-- Caption -->
+            <p>{{ post.caption }}</p>
+
+            <!-- Image -->
+            {% if post.image %}
+                <img src="{{ post.image.url }}"
+                     class="post-image">
+            {% endif %}
+
+            <!-- Like -->
+            <div class="actions">
+
+                <a href="{% url 'like_post' post.id %}">
+                    ❤️ Like
+                </a>
+
+                <strong>
+                    {{ post.likes.count }} Likes
+                </strong>
+
+            </div>
+
+            <hr>
+
+            <h3 style="margin-top:20px;">
+                💬 Comments
+            </h3>
+
+            <!-- Comments -->
+            {% for comment in post.comments.all %}
+
+            <div class="comment">
+
+                <strong>{{ comment.user.username }}</strong>
+
+                <br>
+
+                {{ comment.text }}
+
+            </div>
+
+            {% empty %}
+
+            <p style="color:gray;">
+                No comments yet.
+            </p>
+
+            {% endfor %}
+
+            <!-- Add Comment -->
+            <form action="{% url 'add_comment' post.id %}" method="POST">
+
+                {% csrf_token %}
+
+                <div class="comment-box">
+
+                    <input
+                        type="text"
+                        name="text"
+                        placeholder="Write a comment...">
+
+                    <button type="submit">
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        {% empty %}
+
+        <div class="post-card">
+
+            <h2>No Posts Yet 😢</h2>
+
+            <p>Create your first post!</p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
