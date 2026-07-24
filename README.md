@@ -36,8 +36,7 @@ Users can:
 <img width="1903" height="972" alt="Screenshot 2026-07-23 105347" src="https://github.com/user-attachments/assets/574fc02c-f64d-4067-a52c-cc0ac8d5da90" />
 
 
-(Add your project screenshots here)
 
 ## 👩‍💻 Developed By
 
-Aksha
+Akshara K
